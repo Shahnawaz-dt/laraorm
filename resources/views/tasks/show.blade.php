@@ -1,0 +1,4 @@
+<h1>{{ $task->title }}</h1>
+<p>{{ $task->description }}</p>
+<p>Status: {{ $task->status }}</p>
+<p>Category: {{ $task->category->name }}</p>
