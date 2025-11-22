@@ -39,5 +39,40 @@ public function show($id)
 $task = Task::findOrFail($id);
 return view('tasks.show', compact('task'));
 }
+public function destroy(Task $task)
+{
+    // Optional: Add authorization if you want only the owner to delete
+    // $this->authorize('delete', $task);
+
+    $task->delete();
+
+    return redirect()
+           ->route('tasks.index')
+           ->with('success', 'Task deleted successfully!');
+}
+
+public function edit(Task $task)
+{
+    $categories = Category::all();
+
+    return view('tasks.edit', compact('task', 'categories'));
+}
+
+// 2. Update the task in database
+public function update(Request $request, Task $task)
+{
+    $request->validate([
+        'title'       => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'status'      => 'required|in:Pending,In Progress,Completed',
+        'category_id' => 'required|exists:categories,id',
+    ]);
+
+    $task->update($request->all());
+
+    return redirect()
+           ->route('tasks.index')
+           ->with('success', 'Task updated successfully!');
+}
 
 }

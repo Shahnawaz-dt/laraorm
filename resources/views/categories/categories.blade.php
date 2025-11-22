@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Create Category</title>
-</head>
-<body>
+@extends('layouts.app')
 
 <h2>Create Category</h2>
 

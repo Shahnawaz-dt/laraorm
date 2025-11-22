@@ -44,4 +44,37 @@ public function show(Category $category)
 
 return view('categories.show', compact('category'));
 }
+
+public function edit(Category $category)
+{
+    $categories = Category::all();
+
+    return view('Categories.edit', compact('category', 'categories'));
+}
+
+// 2. Update the task in database
+    public function update(Request $request, Category $category)
+{
+    $request->validate([
+        'name'       => 'required|string|max:255',
+ 
+    ]);
+
+    $category->update($request->all());
+
+    return redirect()
+           ->route('categories.index')
+           ->with('success', 'Category updated successfully!');
+}
+public function destroy(Category $category)
+{
+    // Optional: Add authorization if you want only the owner to delete
+    // $this->authorize('delete', $task);
+
+    $category->delete();
+
+    return redirect()
+           ->route('categories.index')
+           ->with('success', 'Category deleted successfully!');
+}
 }
